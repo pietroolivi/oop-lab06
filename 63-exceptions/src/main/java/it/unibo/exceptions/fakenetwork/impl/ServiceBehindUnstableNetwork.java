@@ -1,5 +1,6 @@
 package it.unibo.exceptions.fakenetwork.impl;
 
+import it.unibo.exceptions.NetworkException;
 import it.unibo.exceptions.arithmetic.ArithmeticService;
 import it.unibo.exceptions.fakenetwork.api.NetworkComponent;
 
@@ -24,26 +25,32 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
     /**
      * @param failProbability the probability that a network communication fails
      * @param randomSeed random generator seed for reproducibility
+     * @throws IllegalArgumentException
      */
-    public ServiceBehindUnstableNetwork(final double failProbability, final int randomSeed) {
+    public ServiceBehindUnstableNetwork(final double failProbability, final int randomSeed) throws IllegalArgumentException {
         /*
          * The probability should be in [0, 1[!
          */
+        if (failProbability < 0 || failProbability >= 1) {
+            throw new IllegalArgumentException("Probability out of range!");
+        }
         this.failProbability = failProbability;
         randomGenerator = new Random(randomSeed);
     }
 
     /**
      * @param failProbability the probability that a network communication fails
+     * @throws IllegalArgumentException
      */
-    public ServiceBehindUnstableNetwork(final double failProbability) {
+    public ServiceBehindUnstableNetwork(final double failProbability) throws IllegalArgumentException {
         this(failProbability, 0);
     }
 
     /**
      * Builds a new service with an unstable network.
+     * @throws IllegalArgumentException
      */
-    public ServiceBehindUnstableNetwork() {
+    public ServiceBehindUnstableNetwork() throws IllegalArgumentException {
         this(0.5);
     }
 
@@ -54,9 +61,8 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         if (KEYWORDS.contains(data) || exceptionWhenParsedAsNumber == null) {
             commandQueue.add(data);
         } else {
-            final var message = data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number";
-            System.out.println(message);
             commandQueue.clear();
+            throw new IllegalArgumentException(new NumberFormatException(data + "is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number"));
             /*
              * This method, in this point, should throw an IllegalStateException.
              * Its cause, however, is the previous NumberFormatException.
@@ -77,10 +83,9 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         }
     }
 
-    private void accessTheNework(final String message) throws IOException {
+    private void accessTheNework(final String message) throws NetworkException {
         if (randomGenerator.nextDouble() < failProbability) {
-            throw new IOException("Generic I/O error");
+            throw new NetworkException();
         }
     }
-
 }
