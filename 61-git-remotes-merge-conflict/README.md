@@ -27,7 +27,9 @@ Si è passati a un nuovo branch 'imported-feat'
    e da qui si esegua il merge di `feature`
 
 >>git checkout master
+
 >>git merge imported-feat
+
 Merge automatico di HelloWorld.java in corso
 CONFLITTO (contenuto): conflitto di merge in HelloWorld.java
 Merge automatico fallito; risolvi i conflitti ed esegui il commit
@@ -45,9 +47,12 @@ del risultato.
      che il nome dell'autore del file
      (funzionalità presente su `feature`)
 
->>|Accept Both Changes|
->>git commit -m “Merged imported-feat into master”
->>git log --all --oneline --graph  
+>|Accept Both Changes|
+
+>git commit -m “Merged imported-feat into master”
+
+>git log --all --oneline --graph  
+
 *   37ac07f (HEAD -> master) Merged imported-feat into master
 |\  
 | * bed943f (origin/feature, imported-feat) Print author information
@@ -64,8 +69,10 @@ del risultato.
 
 7. Si aggiunga il nuovo repository creato come **remote** e si elenchino i remote
 
->>git remote add a-remote git@github.com:pietroolivi/es61-lab06.git
->>git remote -v
+>git remote add a-remote git@github.com:pietroolivi/es61-lab06.git
+
+>git remote -v
+
 a-remote        git@github.com:pietroolivi/es61-lab06.git (fetch)
 a-remote        git@github.com:pietroolivi/es61-lab06.git (push)
 origin  git@github.com:APICe-at-DISI/OOP-git-merge-conflict-test.git (fetch)
@@ -76,6 +83,7 @@ origin  git@github.com:APICe-at-DISI/OOP-git-merge-conflict-test.git (push)
 8. Si faccia push del branch `master` sul proprio repository
 
 >>git push a-remote
+
 Enumerazione degli oggetti in corso: 15, fatto.
 Conteggio degli oggetti in corso: 100% (15/15), fatto.
 Compressione delta in corso, uso fino a 8 thread
@@ -90,7 +98,8 @@ To github.com:pietroolivi/es61-lab06.git
 
 9. Si setti il branch remoto `master` del nuovo repository come *upstream* per il proprio branch `master` locale
 
->>git branch --set-upstream-to=a-rem
+>git branch --set-upstream-to=a-rem
+
   imported-feat
 * master
   remotes/a-remote/master
